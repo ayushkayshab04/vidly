@@ -17,7 +17,6 @@ router.get("/", async (req, res) => {
         res.send(genre)
     }
     catch (ex) {
-        res.status(500).send("something went sideways")
     }
 })
 

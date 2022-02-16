@@ -29,7 +29,9 @@ app.use("/api/rentals", rental)
 app.use("/api/users", users)
 app.use("/api/auth", auth)
 
-
+app.use(function (err, req, res, next) {
+    res.status(500).send("Something failed.");
+})
 
 
 app.listen(port, () => {
