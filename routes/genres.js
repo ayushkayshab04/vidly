@@ -12,8 +12,13 @@ import { Genre } from "../modles/genres.js"
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-    const genre = await Genre.find().sort("name");
-    res.send(genre)
+    try {
+        const genre = await Genre.find().sort("name");
+        res.send(genre)
+    }
+    catch (ex) {
+        res.status(500).send("something went sideways")
+    }
 })
 
 router.post("/", auth, async (req, res) => {
