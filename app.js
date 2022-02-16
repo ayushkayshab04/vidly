@@ -9,7 +9,7 @@ import mongoose from "mongoose";
 import movie from "./routes/movies.js"
 import rental from "./routes/rental.js"
 import auth from "./routes/auth.js"
-
+import error from "./middleware/error.js"
 if (!config.get('jwtPrivateKey')) {
     console.error('FATAL ERROR: jwtPrivateKey is not defined.')
     process.exit(1);
@@ -29,9 +29,7 @@ app.use("/api/rentals", rental)
 app.use("/api/users", users)
 app.use("/api/auth", auth)
 
-app.use(function (err, req, res, next) {
-    res.status(500).send("Something failed.");
-})
+app.use(error)
 
 
 app.listen(port, () => {
