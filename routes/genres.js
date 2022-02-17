@@ -3,7 +3,7 @@ import auth from "../middleware/auth.js"
 import admin from "../middleware/admin.js"
 import Joi from "joi";
 import { Genre } from "../modles/genres.js"
-import { asyncMiddleware } from "../middleware/async.js";
+import "express-async-errors";
 
 
 
@@ -13,15 +13,15 @@ const router = express.Router();
 
 
 
-router.get("/", asyncMiddleware(async (req, res) => {
+router.get("/", async (req, res) => {
     const genre = await Genre.find().sort("name");
-     res.send(genre)
-    
-  
-    
-}));
+    res.send(genre)
 
-router.post("/", auth, asyncMiddleware( async (req, res) => {
+
+
+});
+
+router.post("/", auth, async (req, res) => {
 
 
 
@@ -32,18 +32,18 @@ router.post("/", auth, asyncMiddleware( async (req, res) => {
     await genre.save()
     res.send(genre)
 
-}))
+})
 
-router.get("/:id", asyncMiddleware( async (req, res) => {
+router.get("/:id", async (req, res) => {
 
     const genre = await Genre.findById(req.params.id)
     if (!genre) res.status(404).send("The genre with the given is is not found")
 
     res.send(genre)
 
-}))
+})
 
-router.put("/:id", asyncMiddleware( async (req, res) => {
+router.put("/:id", async (req, res) => {
     const { error } = validateGenres(req.body)
     if (error) res.status(400).send(error.details[0].message);
 
@@ -54,16 +54,16 @@ router.put("/:id", asyncMiddleware( async (req, res) => {
     if (!genre) res.status(404).send("The genre with the given is is not found")
     res.send(genre);
 
-}))
+})
 
-router.delete("/:id", [auth, admin], asyncMiddleware( async (req, res) => {
+router.delete("/:id", [auth, admin], async (req, res) => {
     const genre = await Genre.findByIdAndRemove(req.params.id);
 
     if (!genre) res.status(404).send("The genre with the given is is not found")
 
     res.send(genre)
 
-}))
+})
 
 
 
