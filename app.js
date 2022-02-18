@@ -11,6 +11,7 @@ import movie from "./routes/movies.js"
 import rental from "./routes/rental.js"
 import auth from "./routes/auth.js"
 import error from "./middleware/error.js"
+import "./startup/prod.js"
 
 
 
